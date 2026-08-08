@@ -6,6 +6,7 @@
 - **IDE**: Cursor (with Cursor Grok 4.5 agent enabled)
 - **Python Environment**: System/Framework Python 3.9+ with `mutagen`, `tinytag` installed
 - **Audio Software**: Traktor Pro 4.5.1, Rekordbox 7.2.17, Apple Music
+- **GitHub Project**: https://github.com/ixamal/music_migration (scripts + docs only; no audio)
 - **Future Tech Stack**: Local LLMs (Ollama / MCP), Verse / Unreal Engine 6.0, Xcode / Swift, Git workflows
 
 ---

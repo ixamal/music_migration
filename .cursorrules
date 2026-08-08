@@ -1,5 +1,7 @@
 # Cursor Rules
 - Always read `docs/MASTER_CONTEXT.md` (or `MASTER_CONTEXT.md`) for active project state, path definitions, and execution history.
+- Log session progress in `docs/PROGRESS.md`; keep architecture in MASTER_CONTEXT.
+- GitHub remote: https://github.com/ixamal/music_migration (scripts + docs only — never commit audio / NML / giant JSON catalogs).
 - Never write destructive file-moving code without offering a `--dry-run` option first.
 - Use `pathlib.Path` for cross-platform, clean path manipulations in Python.
 
