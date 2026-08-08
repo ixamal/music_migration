@@ -1,0 +1,46 @@
+# Cursor Rules
+- Always read `docs/MASTER_CONTEXT.md` (or `MASTER_CONTEXT.md`) for active project state, path definitions, and execution history.
+- Never write destructive file-moving code without offering a `--dry-run` option first.
+- Use `pathlib.Path` for cross-platform, clean path manipulations in Python.
+
+# DJ Migration Context
+- Audio Candidates Directory: ~/Music/MIGRATED_ORPHANS
+- Consolidated Audio Location: ~/Music/stems_audio
+- Apple Music Media Directory: ~/Music/Music/Media
+- Traktor 4 Collection: ~/Documents/Native Instruments/Traktor 4.5.1/collection.nml
+
+# Objectives
+1. Organize ~/Music/stems_audio into a human-friendly structure: {Artist}/{Album}/{Track}.ext using metadata (mutagen/tinytag).
+2. Remap Traktor (collection.nml) and Rekordbox (rekordbox.xml) to point to updated local paths.
+3. Prepare environment for local LLMs (Ollama/MCP) and Verse/Unreal/Xcode workflows.
+
+# Rekordbox XML Integration
+- Rekordbox Master XML: /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
+- Local Rekordbox XML Target: ~/Music/PioneerDJ/rekordbox.xml
+
+# Workflow Target
+- Export Traktor playlists, cues, and grids directly to Rekordbox XML via Python bridge scripts.
+
+# Current Progress & Runtime Status
+- Local file index count: ~24,546 unique files on SSD
+- Traktor Relink Execution: SUCCESSFUL
+  * Relinked to Stems/Audio  : 1,052
+  * Relinked to Music Folder : 32,569
+  * TOTAL RELINKED           : 33,621
+  * Residual Unmatched       : 2,812 (mostly orphaned/deleted temp files)
+- Current Traktor Status: Running background analysis pass on 22,223 newly mapped tracks.
+
+# Architecture & Directories
+- Candidate/Orphan Staging : ~/Music/MIGRATED_ORPHANS
+- Consolidated Audio Root  : ~/Music/stems_audio
+- Apple Music Media Root   : ~/Music/Music/Media
+- Traktor 4 Collection     : ~/Documents/Native Instruments/Traktor 4.5.1/collection.nml
+- Rekordbox Master Source  : /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
+- Local Rekordbox Target   : ~/Music/PioneerDJ/rekordbox.xml
+
+# Next Steps
+1. Wait for Traktor background analysis to finish.
+2. Run organize_stems.py (using mutagen/tinytag) to move ~/Music/stems_audio into {Artist}/{Album}/{Track}.ext layout.
+3. Update collection.nml paths post-reorganize.
+4. Build Rekordbox XML bridge.
+5. Performance rig (post-stable library): BlackHole audio/MIDI routing; Traktor on S88 MkII + S8; Rekordbox on DDJ-FLX10.

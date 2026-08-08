@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Staging / migrated filesystem mirrors (not source)
+Desktop/
+Documents/
+Downloads/
+Library/
+
+# Large generated indexes (regenerate locally)
+*.json
+!package.json
+
+# Vendor / bootstrap junk
+get-pip.py
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# Audio never belongs in git
+*.mp3
+*.m4a
+*.m4p
+*.aiff
+*.aif
+*.wav
+*.flac
+*.alac
+*.ogg
+*.aac
+*.wma
+
+# Traktor / Rekordbox local dumps if copied here
+*.nml
+*.nml.bak
+collection.nml*
+rekordbox.xml
