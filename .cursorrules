@@ -30,7 +30,7 @@
   * Relinked to Music Folder : 32,569
   * TOTAL RELINKED           : 33,621
   * Residual Unmatched       : 2,812 (mostly orphaned/deleted temp files)
-- Current Traktor Status: Running background analysis pass on 22,223 newly mapped tracks.
+- Current Traktor Status: Background analysis COMPLETE (confirmed 2026-08-08).
 
 # Architecture & Directories
 - Candidate/Orphan Staging : ~/Music/MIGRATED_ORPHANS
@@ -41,8 +41,9 @@
 - Local Rekordbox Target   : ~/Music/PioneerDJ/rekordbox.xml
 
 # Next Steps
-1. Wait for Traktor background analysis to finish.
-2. Run organize_stems.py (using mutagen/tinytag) to move ~/Music/stems_audio into {Artist}/{Album}/{Track}.ext layout.
-3. Update collection.nml paths post-reorganize.
-4. Build Rekordbox XML bridge.
-5. Performance rig (post-stable library): BlackHole audio/MIDI routing; Traktor on S88 MkII + S8; Rekordbox on DDJ-FLX10.
+1. Rekordbox XML bridge (Apple Music Media left alone for now).
+2. Optional later: fold _rescued_from_staging; Apple Music path cleanup.
+3. Performance rig: BlackHole; Traktor S88 MkII + S8; Rekordbox DDJ-FLX10.
+
+# Journal
+- Session narrative → docs/PROGRESS.md; architecture → docs/MASTER_CONTEXT.md; commits → git log.

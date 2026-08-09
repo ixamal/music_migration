@@ -9,9 +9,10 @@ Documents/
 Downloads/
 Library/
 
-# Large generated indexes (regenerate locally)
+# Large generated indexes / manifests (regenerate locally)
 *.json
 !package.json
+organize_stems_manifest.json
 
 # Vendor / bootstrap junk
 get-pip.py
