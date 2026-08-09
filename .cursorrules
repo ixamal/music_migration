@@ -1,48 +1,39 @@
 # Cursor Rules
 - Always read `docs/MASTER_CONTEXT.md` (or `MASTER_CONTEXT.md`) for active project state, path definitions, and execution history.
 - Log session progress in `docs/PROGRESS.md`; keep architecture in MASTER_CONTEXT.
-- GitHub remote: https://github.com/ixamal/music_migration (scripts + docs only — never commit audio / NML / giant JSON catalogs).
+- GitHub remote: https://github.com/ixamal/music_migration (scripts + docs only — never commit audio / NML / master.db / giant JSON catalogs).
 - Never write destructive file-moving code without offering a `--dry-run` option first.
 - Use `pathlib.Path` for cross-platform, clean path manipulations in Python.
 
 # DJ Migration Context
-- Audio Candidates Directory: ~/Music/MIGRATED_ORPHANS
-- Consolidated Audio Location: ~/Music/stems_audio
-- Apple Music Media Directory: ~/Music/Music/Media
+- Repo / scripts: ~/Music/MIGRATED_ORPHANS
+- Consolidated Audio: ~/Music/stems_audio ({Artist}/{Album}/)
+- Apple Music Media: ~/Music/Music/Media — do not reorganize yet
 - Traktor 4 Collection: ~/Documents/Native Instruments/Traktor 4.5.1/collection.nml
+- Rekordbox XML: ~/Music/PioneerDJ/rekordbox.xml
+- Rekordbox live DB: ~/Library/Pioneer/rekordbox/master.db
+- Sampler audio: ~/Music/PioneerDJ/Sampler/
 
 # Objectives
-1. Organize ~/Music/stems_audio into a human-friendly structure: {Artist}/{Album}/{Track}.ext using metadata (mutagen/tinytag).
-2. Remap Traktor (collection.nml) and Rekordbox (rekordbox.xml) to point to updated local paths.
-3. Prepare environment for local LLMs (Ollama/MCP) and Verse/Unreal/Xcode workflows.
+1. Organize ~/Music/stems_audio into {Artist}/{Album}/{Track}.ext (DONE for main pass).
+2. Remap Traktor collection.nml + playlist PRIMARYKEYs (DONE / accepted).
+3. Bridge Traktor → Rekordbox XML + heal paths (DONE for day; sampler pads imperfect).
+4. Later: Apple Music cleanup; BlackHole + controllers; Ollama/Unreal/Xcode.
 
-# Rekordbox XML Integration
-- Rekordbox Master XML: /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
-- Local Rekordbox XML Target: ~/Music/PioneerDJ/rekordbox.xml
+# Rekordbox
+- Master XML: /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
+- Local XML: ~/Music/PioneerDJ/rekordbox.xml
+- Old prefs backup: /Volumes/Terrarum/MIGRATION_MASTER/rekordbox_old_prefs/
+- RB7 import: Preferences → View → Layout → rekordbox xml; Advanced → Database → Imported Library
 
-# Workflow Target
-- Export Traktor playlists, cues, and grids directly to Rekordbox XML via Python bridge scripts.
-
-# Current Progress & Runtime Status
-- Local file index count: ~24,546 unique files on SSD
-- Traktor Relink Execution: SUCCESSFUL
-  * Relinked to Stems/Audio  : 1,052
-  * Relinked to Music Folder : 32,569
-  * TOTAL RELINKED           : 33,621
-  * Residual Unmatched       : 2,812 (mostly orphaned/deleted temp files)
-- Current Traktor Status: Background analysis COMPLETE (confirmed 2026-08-08).
-
-# Architecture & Directories
-- Candidate/Orphan Staging : ~/Music/MIGRATED_ORPHANS
-- Consolidated Audio Root  : ~/Music/stems_audio
-- Apple Music Media Root   : ~/Music/Music/Media
-- Traktor 4 Collection     : ~/Documents/Native Instruments/Traktor 4.5.1/collection.nml
-- Rekordbox Master Source  : /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
-- Local Rekordbox Target   : ~/Music/PioneerDJ/rekordbox.xml
+# Current Status (2026-08-08 evening wrap)
+- Traktor: analysis COMPLETE; crates verified; stems organized.
+- Rekordbox: merged+healed XML usable in Performance; Sampler WAVs restored; pad banks partial.
+- User happy — day closed. See docs/PROGRESS.md.
 
 # Next Steps
-1. Rekordbox XML bridge (Apple Music Media left alone for now).
-2. Optional later: fold _rescued_from_staging; Apple Music path cleanup.
+1. Finish sampler pads (manual from Capture or further DB work).
+2. Fold _rescued_from_staging; Apple Music path cleanup later.
 3. Performance rig: BlackHole; Traktor S88 MkII + S8; Rekordbox DDJ-FLX10.
 
 # Journal

@@ -1,50 +1,61 @@
-# 🚀 ALKALUROPS / DAVID MASTER ENVIRONMENT & MIGRATION CONTEXT
+# ALKALUROPS / DAVID — Master Environment & Migration Context
 
 ## 1. System Architecture & Environment
 - **User / Machine**: David / Mac (Apple Silicon)
-- **Primary Shell**: Zsh (`~/.zshrc` configured, errors resolved)
-- **IDE**: Cursor (with Cursor Grok 4.5 agent enabled)
-- **Python Environment**: System/Framework Python 3.9+ with `mutagen`, `tinytag` installed
+- **Primary Shell**: Zsh
+- **IDE**: Cursor (Cursor Grok 4.5 agent)
+- **Python**: 3.9+ with `mutagen`, `tinytag`
 - **Audio Software**: Traktor Pro 4.5.1, Rekordbox 7.2.17, Apple Music
-- **GitHub Project**: https://github.com/ixamal/music_migration (scripts + docs only; no audio)
-- **Project journal**: `docs/PROGRESS.md` + `git log` (lightweight Confluence)
-- **Future Tech Stack**: Local LLMs (Ollama / MCP), Verse / Unreal Engine 6.0, Xcode / Swift, Git workflows
+- **GitHub**: https://github.com/ixamal/music_migration (scripts + docs only; no audio)
+- **Journal**: `docs/PROGRESS.md` + `git log`
+- **Later**: Ollama/MCP, Verse/Unreal, Xcode; BlackHole + controllers
 
 ---
 
 ## 2. Directory & Path Mapping
-- **Staging / Migration Root**: `~/Music/MIGRATED_ORPHANS` *(scripts/docs only after cleanup; ~38MB)*
-- **Master External Backup Volume**: `/Volumes/Terrarum/MIGRATION_MASTER`
-  - Master Collection: `/Volumes/Terrarum/MIGRATION_MASTER/collection.nml` (52 MB)
-  - Master Rekordbox XML: `/Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml`
-- **Consolidated Local Audio Root (SSD)**: `~/Music/stems_audio` — `{Artist}/{Album}/{Track}` (~578 artists, ~3.8k files)
-- **Apple Music Media Root (SSD)**: `~/Music/Music/Media` — **do not reorganize yet**
-- **Traktor 4.5.1 Local Collection**: `~/Documents/Native Instruments/Traktor 4.5.1/collection.nml`
-- **Rekordbox Local Target**: `~/Music/PioneerDJ/rekordbox.xml`
+- **Repo / scripts**: `~/Music/MIGRATED_ORPHANS` (~38MB after staging cleanup)
+- **Terrarum master**: `/Volumes/Terrarum/MIGRATION_MASTER`
+  - `collection.nml`, `rekordbox.xml`, Music, PioneerDJ, `rekordbox_old_prefs/`
+- **Stems tree**: `~/Music/stems_audio` — `{Artist}/{Album}/{Track}` (~578 artists)
+- **Apple Music**: `~/Music/Music/Media` — **do not reorganize yet**
+- **Traktor NML**: `~/Documents/Native Instruments/Traktor 4.5.1/collection.nml`
+- **Rekordbox XML**: `~/Music/PioneerDJ/rekordbox.xml` (healed merge, ~23k tracks)
+- **Rekordbox live DB**: `~/Library/Pioneer/rekordbox/master.db`
+- **Rekordbox app settings**: `~/Library/Application Support/Pioneer/rekordbox6/`
+- **Sampler audio**: `~/Music/PioneerDJ/Sampler/` (Capture + OSC presets)
 
 ---
 
-## 3. Milestones Accomplished
-1. **Local Migration Execution**: Consolidated loose audio/stems/orphans onto `~/Music/stems_audio`.
-2. **Traktor NML Relink (`update_nml_paths.py`)**: O(1) basename index; **33,621** initial relinks (92.2%).
-3. **Traktor analysis pass**: COMPLETE.
-4. **Playlist PRIMARYKEY repair (`fix_nml_playlists.py`)**: Fixed `TYPE=STEM` + `TRACK` keys after path moves (~1,476 repairs).
-5. **Stems tree organize (`organize_stems.py`)**: 3,872 files → `{Artist}/{Album}/`.
-6. **Staging cleanup (`cleanup_staging.py`)**: Rescued 7 uniques; removed duplicate staging trees.
-7. **Sanity pass 2026-08-08**: User confirmed crates/tree; agent verified playlist liveness (Stems 127/130, April Fools 26/26, etc.). **Traktor phase accepted.**
+## 3. Milestones (as of 2026-08-08 evening wrap)
+1. Consolidated stems/orphans → `~/Music/stems_audio`; staged cleanup done.
+2. Traktor relink (`update_nml_paths.py`): **33,621** / unmatched **2,812**.
+3. Traktor analysis: **COMPLETE**.
+4. Playlist PRIMARYKEY repair (`fix_nml_playlists.py`): `TYPE=STEM` + `TRACK` (~1,476).
+5. Organize stems (`organize_stems.py`): **3,872** → Artist/Album.
+6. Staging cleanup (`cleanup_staging.py`): 7 rescued; duplicate trees removed.
+7. Traktor crates verified — **Traktor phase accepted**.
+8. Rekordbox merge bridge (`traktor_to_rekordbox.py`): Terrarum base + Traktor fold-in → local XML **23,004** tracks; **From Traktor** playlists.
+9. Path heal (`heal_rekordbox_paths.py`): **602** Documents/acapella paths → stems_audio.
+10. Sampler WAVs restored; old `master.db` restored from Terrarum prefs (partial pad recovery).
+11. User confirmed XML library usable in Performance mode; **happy wrap for the day**.
 
 ---
 
-## 4. Next Technical Tasks
-1. **Rekordbox 7 XML Bridge**:
-   - Convert/write Traktor cues, grids, and playlists into `~/Music/PioneerDJ/rekordbox.xml`.
-2. **Optional hygiene (later)**:
-   - Fold `_rescued_from_staging/` into Artist/Album; remove locked `stems_audio/Library` Google Drive shortcut via Finder.
-   - Apple Music / `Media.localized` cleanup as a separate project (re-wrap Traktor after).
-3. **Dev Tools & Local AI Integration**:
-   - Configure Ollama MCP servers in Cursor for offline coding.
-   - Hook in Unreal Engine (Verse/C++) and Xcode project templates.
-4. **Performance Rig: BlackHole + Controllers** (after library paths are stable):
-   - **BlackHole** for virtual audio + MIDI between Traktor and Rekordbox.
-   - Traktor: **S88 MkII** + **S8**; Rekordbox: **DDJ-FLX10**.
-   - One app ↔ one primary controller first, then dual-software via BlackHole.
+## 4. Key scripts
+| Script | Role |
+|--------|------|
+| `update_nml_paths.py` | Remap Traktor LOCATION by basename |
+| `fix_nml_playlists.py` | Repair playlist PRIMARYKEYs after remap |
+| `organize_stems.py` | Move stems_audio → Artist/Album |
+| `cleanup_staging.py` | Rescue uniques; delete staging dup trees |
+| `traktor_to_rekordbox.py` | Merge Traktor → Rekordbox XML |
+| `heal_rekordbox_paths.py` | Heal dead RB XML paths by basename |
+| `restore_rekordbox_master_db.py` | Restore Library `master.db` from Terrarum prefs |
+
+---
+
+## 5. Next (another day)
+1. Sampler pads: finish manually from Capture, or dig DB/RB7 slot model further.
+2. Fold `_rescued_from_staging/`; optional Traktor wrap.
+3. Apple Music / `Media.localized` cleanup (separate project).
+4. BlackHole + S88 MkII / S8 / DDJ-FLX10.
