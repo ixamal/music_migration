@@ -6,6 +6,17 @@ This file + `git log` is the project journal (Confluence without the ceremony).
 
 ---
 
+## 2026-08-10 — Disable Cursor git co-author attribution
+
+- Turned off Commit + PR attribution for local Agent:
+  - IDE storage: `attributeCommitsToAgent=false`, `attributePRsToAgent=false`
+  - CLI: `~/.cursor/cli-config.json` → `attribution.attributeCommitsToAgent/PRsToAgent: false`
+- Project rule: `.cursor/rules/no-cursor-attribution.mdc` + note in `.cursorrules`
+- Goal: future commits/PRs authored by David alone (no `Co-authored-by: Cursor` / `Made-with: Cursor`)
+- UI cross-check: Cursor Settings → Git & PRs → Attribution (both off). Restart Cursor if toggles look stale.
+
+---
+
 ## 2026-08-08 (evening wrap) — Traktor + Rekordbox day; user happy; call it
 
 ### Verdict
