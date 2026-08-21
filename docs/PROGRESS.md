@@ -6,6 +6,24 @@ This file + `git log` is the project journal (Confluence without the ceremony).
 
 ---
 
+## 2026-08-21 — Post-move dry-run; GitHub Desktop attached
+
+Clone is at `~/github/ixamal/music_migration`. GitHub Desktop shows the same five local files. All `python3 -m music_migration.* --dry-run` runs from the new path; counts match 2026-08-20. No `--execute`. Do not run hoist, organize, or traktor_to_rekordbox against local XML.
+
+---
+
+## 2026-08-20 (late) — Clone moved to ~/github/ixamal
+
+Working copy moved `~/Music/MIGRATED_ORPHANS` → `~/github/ixamal/music_migration` (same `origin`, not a second clone). Org folder: `~/github/alkalurop/` (empty). Open this path in Cursor and **Add local repository** in GitHub Desktop. Parent folders are not git repos.
+
+---
+
+## 2026-08-20 (late) — Canned; BlackHole is a new repo
+
+`music_migration` is parked. Performance-rig work (BlackHole + S88 MkII / S8 / DDJ-FLX10) moves to **https://github.com/ixamal/blackhole** (`~/github/ixamal/blackhole` when created). Reopen this repo when a remap or MRBT retag is needed.
+
+---
+
 ## 2026-08-20 (late) — Package dry-runs (no `--execute`)
 
 All `python3 -m music_migration.*` entry points imported and ran dry-run. `--dry-run` is now accepted everywhere (default is still no writes). Manifests land in `config/`.

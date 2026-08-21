@@ -5,7 +5,8 @@ Default is dry-run. With --execute:
   1) Copy staging-only audio (not already in stems_audio by basename) into
      ~/Music/stems_audio/_rescued_from_staging/
   2) Remove staging trees: Desktop/, Documents/, Downloads/, Library/
-     under ~/Music/MIGRATED_ORPHANS (keeps scripts/docs/git)
+     under the legacy staging path ~/Music/MIGRATED_ORPHANS
+     (repo now lives at ~/github/ixamal/music_migration; do not treat it as staging)
   3) Remove leftover ~/Music/stems_audio/Library Google Drive shortcut junk
 """
 

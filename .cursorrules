@@ -7,7 +7,7 @@
 - Git authorship: commits and PRs must be David alone — never add `Co-authored-by: Cursor`, `Made-with: Cursor`, or any Cursor attribution trailer.
 
 # DJ Migration Context
-- Repo / scripts: ~/Music/MIGRATED_ORPHANS
+- Repo / scripts: ~/github/ixamal/music_migration
 - Consolidated Audio: ~/Music/stems_audio ({Artist}/{Album}/)
 - Apple Music Media: ~/Music/Music/Media.localized ({Artist}/{Album}/ after hoist)
 - Traktor 4 Collection: ~/Documents/Native Instruments/Traktor 4.5.1/collection.nml
@@ -19,7 +19,7 @@
 1. Organize ~/Music/stems_audio into {Artist}/{Album}/{Track}.ext (DONE for main pass).
 2. Remap Traktor collection.nml + playlist PRIMARYKEYs (DONE / accepted).
 3. Bridge Traktor → Rekordbox XML + heal paths (DONE for day; sampler pads imperfect).
-4. Apple Music hoist DONE 2026-08-20. Next: BlackHole + controllers; sampler pads by hand.
+4. Apple Music hoist DONE 2026-08-20. Sampler pads by hand (parked).
 
 # Rekordbox
 - Master XML: /Volumes/Terrarum/MIGRATION_MASTER/rekordbox.xml
@@ -33,9 +33,9 @@
 - Apple Music tree: Media.localized/{Artist}/{Album}/ — nested Music/ gone.
 - Sampler pads: parked (manual).
 
-# Next Steps
-1. Performance rig: BlackHole; Traktor S88 MkII + S8; Rekordbox DDJ-FLX10.
-2. Later: MRBT genre retag (Ollama on David's set/crate vocabulary; write tags to files).
+# Status
+CANNED 2026-08-20. Performance rig → https://github.com/ixamal/blackhole
+Later (this repo): MRBT genre retag (Ollama on David's set/crate vocabulary; write tags to files).
 
 # Journal
 - Session narrative → docs/PROGRESS.md; architecture → docs/MASTER_CONTEXT.md; commits → git log.

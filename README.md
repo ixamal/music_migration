@@ -27,7 +27,8 @@ docs/                     MASTER_CONTEXT + PROGRESS
 4. Repair playlist `PRIMARYKEY`s after moves (`TYPE=TRACK` + `TYPE=STEM`)
 5. Bridge Traktor → Rekordbox XML (merge + path heal)
 6. Restore / document Rekordbox sampler DB + Capture audio
-7. Document the performance rig (BlackHole, S88 MkII, S8, DDJ-FLX10)
+
+**Canned 2026-08-20.** Performance rig (BlackHole + controllers) is **[ixamal/blackhole](https://github.com/ixamal/blackhole)**. Reopen this repo for remaps or MRBT retag.
 
 ## Docs
 
@@ -39,7 +40,7 @@ docs/                     MASTER_CONTEXT + PROGRESS
 
 ## Commands
 
-From the repo root (`~/Music/MIGRATED_ORPHANS`):
+From the repo root (`~/github/ixamal/music_migration`):
 
 ```bash
 python3 -m music_migration                          # list commands

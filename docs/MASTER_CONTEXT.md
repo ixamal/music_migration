@@ -8,13 +8,14 @@
 - **Audio Software**: Traktor Pro 4.5.1, Rekordbox 7.2.17, Apple Music
 - **GitHub**: https://github.com/ixamal/music_migration (scripts + docs only; no audio)
 - **Journal**: `docs/PROGRESS.md` + `git log`
-- **Later**: Ollama/MCP (genre tagging from David's sets); Verse/Unreal; Xcode; BlackHole + controllers
+- **Later**: Ollama/MCP (genre tagging from David's sets); Verse/Unreal; Xcode
+- **Canned (2026-08-20)**: this repo is parked. Performance rig lives in **https://github.com/ixamal/blackhole**
 - **MRBT**: Music + Rekordbox + Traktor (treat as one library surface)
 
 ---
 
 ## 2. Directory & Path Mapping
-- **Repo / scripts**: `~/Music/MIGRATED_ORPHANS` (~38MB after staging cleanup)
+- **Repo / scripts**: `~/github/ixamal/music_migration` (moved 2026-08-20 from `~/Music/MIGRATED_ORPHANS`)
 - **Terrarum master**: `/Volumes/Terrarum/MIGRATION_MASTER`
   - `collection.nml`, `rekordbox.xml`, Music, PioneerDJ, `rekordbox_old_prefs/`
 - **Stems tree**: `~/Music/stems_audio` — `{Artist}/{Album}/{Track}` (~578 artists)
@@ -61,8 +62,12 @@ Dry-run is the default; `--dry-run` is accepted. Pass `--execute` only to write.
 
 ---
 
-## 5. Next
-1. BlackHole + S88 MkII / S8 / DDJ-FLX10.
-2. Sampler pads: manual, over time (parked).
+## 5. Status — canned 2026-08-20
+
+Library migration is parked. Reopen this repo only to remap after a future file move, or for MRBT genre retag.
+
+Parked (not this repo):
+1. Performance rig → **https://github.com/ixamal/blackhole** (BlackHole, S88 MkII, S8, DDJ-FLX10).
+2. Sampler pads: manual, over time.
 3. Fold `_rescued_from_staging/`.
 4. Later: MRBT genre retag via local Ollama — labels from David's crates/sets, write tags to files once, then refresh Music/Rekordbox/Traktor. Not model-training-on-audio as a first pass.
