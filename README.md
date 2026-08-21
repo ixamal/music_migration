@@ -34,6 +34,9 @@ This repo tracks **scripts + docs only** — not the audio library. Local SSD pa
 | `cleanup_staging.py` | Rescue staging-only files; delete duplicate trees |
 | `traktor_to_rekordbox.py` | Merge Traktor into Terrarum RB XML → local XML |
 | `heal_rekordbox_paths.py` | Heal dead RB XML locations by basename |
+| `hoist_apple_music.py` | Strip extra `Media.localized/Music/` prefix |
+| `fix_apple_music_library_paths.py` | Symlink compat so Music.app old paths resolve |
+| `relocate_rekordbox_collection.py` | Relink Collection `master.db` FolderPaths |
 | `restore_rekordbox_master_db.py` | Restore `master.db` from Terrarum old prefs |
 | `audio_media_catalog.py` | Catalog builder |
 | `execute_local_migration.py` | Local consolidation helper |
@@ -57,15 +60,17 @@ Requires: Python 3.9+, `mutagen`, `tinytag`.
 
 Rekordbox 7: Preferences → View → Layout → enable **rekordbox xml**; Advanced → Database → Imported Library → `~/Music/PioneerDJ/rekordbox.xml`.
 
-## Status (2026-08-08 evening wrap)
+## Status (2026-08-20)
 
-**Traktor:** Accepted. Stems tree organized; playlists repaired; analysis complete.
+**Traktor:** Remapped after Apple Music hoist; playlists repaired.
 
-**Rekordbox:** Merged XML (~23k tracks) + path heal (602) working in Performance mode. Sampler Capture WAVs restored; pad banks partially recovered via old `master.db` — finish manually another day.
+**Rekordbox:** XML ~23k live after hoist heal; Collection `master.db` relocated **1,157** local files. Sampler pads still manual.
 
-**Parked:** Apple Music / `Media.localized` reorg.
+**Apple Music:** `Media.localized/{Artist}/{Album}/` hoist done; `Music/` symlink for library-db compat. Playback confirmed.
 
-**Next session:** Sampler pads; rescued stragglers; BlackHole + controllers.
+**Parked:** Sampler pads (by hand); MRBT genre retag via Ollama later.
+
+**Next:** BlackHole + S88 MkII / S8 / DDJ-FLX10.
 
 ## Remote
 

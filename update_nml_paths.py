@@ -22,16 +22,30 @@ def main():
         default=20,
         help="In --dry-run, print at most N example remaps/misses (default: 20).",
     )
+    parser.add_argument(
+        "--nml",
+        type=Path,
+        default=None,
+        help="Source NML (default: Terrarum master if present, else live Traktor collection).",
+    )
     args = parser.parse_args()
 
     start_time = time.time()
 
-    MASTER_NML = Path("/Volumes/Terrarum/MIGRATION_MASTER/collection.nml")
     TRAKTOR_DIR = Path.home() / "Documents/Native Instruments/Traktor 4.5.1"
     OUTPUT_NML = TRAKTOR_DIR / "collection.nml"
     BACKUP_NML = TRAKTOR_DIR / "collection.nml.bak"
+    TERRARUM_NML = Path("/Volumes/Terrarum/MIGRATION_MASTER/collection.nml")
+    if args.nml is not None:
+        MASTER_NML = args.nml.expanduser().resolve()
+    elif TERRARUM_NML.exists():
+        MASTER_NML = TERRARUM_NML
+    else:
+        MASTER_NML = OUTPUT_NML
     MEDIA_ROOT = Path.home() / "Music/Music"
     STEMS_ROOT = Path.home() / "Music/stems_audio"
+    HOIST_FROM = "/:Media.localized/:Music/:"
+    HOIST_TO = "/:Media.localized/:"
 
     print("Indexing all local audio files on disk into memory...")
 
@@ -57,13 +71,14 @@ def main():
                 print(f"  …indexed {indexed:,} files")
 
     print(f"Indexed {len(file_map):,} total unique local audio files.")
-    print(f"Loading master collection from: {MASTER_NML}...")
+    print(f"Loading collection from: {MASTER_NML}...")
 
     tree = ET.parse(MASTER_NML)
     root = tree.getroot()
 
     relinked_media = 0
     relinked_stems = 0
+    hoisted_nested = 0
     not_found = 0
     dry_samples_shown = 0
 
@@ -86,8 +101,23 @@ def main():
         # Decode NML URL encoding (e.g. '01%20Track.mp3' -> '01 Track.mp3')
         decoded_file = urllib.parse.unquote(raw_file)
 
+        # After Apple Music hoist: strip extra Media.localized/Music/ prefix if that file exists.
+        found_path = None
+        raw_dir = location.get("DIR", "") or ""
+        if HOIST_FROM in raw_dir:
+            hoisted_dir = raw_dir.replace(HOIST_FROM, HOIST_TO, 1)
+            parts = [p for p in hoisted_dir.split("/:") if p]
+            candidate = Path("/")
+            for part in parts:
+                candidate = candidate / part
+            candidate = candidate / decoded_file
+            if candidate.is_file():
+                found_path = candidate
+                hoisted_nested += 1
+
         # Lowercase lookup to handle case mismatch between old/new OS
-        found_path = file_map.get(decoded_file.lower())
+        if found_path is None:
+            found_path = file_map.get(decoded_file.lower())
 
         if found_path:
             if STEMS_ROOT in found_path.parents:
@@ -121,6 +151,7 @@ def main():
     print("\n================ NML REMAP COMPLETE ================")
     print(f"Relinked to Stems/Audio  : {relinked_stems:,}")
     print(f"Relinked to Music Folder : {relinked_media:,}")
+    print(f"  (hoisted nested Music/): {hoisted_nested:,}")
     print(f"Total Relinked Tracks    : {relinked_stems + relinked_media:,}")
     print(f"Unmatched Tracks         : {not_found:,}")
 

@@ -6,6 +6,41 @@ This file + `git log` is the project journal (Confluence without the ceremony).
 
 ---
 
+## 2026-08-20 — Apple Music hoist EXECUTED; Traktor + Rekordbox remapped
+
+- Sampler pads: David will rebuild by hand over time. Parked.
+- `hoist_apple_music.py --execute` with Music/Traktor/Rekordbox quit:
+  - **18,194** moved, **0** errors, **121** kept as `(2)` collisions
+  - Nested `Media.localized/Music/` removed (only leftover `.DS_Store` dirs, then pruned)
+  - Tree now `{Artist}/{Album}/` — **22,759** of **22,769** audio at depth 3
+- Terrarum not mounted → remapped **live** NML (not master). `update_nml_paths.py --nml` + hoist-prefix strip.
+- Traktor COLLECTION: **22,259** live / **2,685** miss (old unmatched + factory sounds). Playlist keys: **2,382** live, **905** repaired across two passes, **144** unresolved (recordings/loops/known orphans).
+- Rekordbox XML heal: **17,351** nested Music/ paths fixed; **22,930** live / **74** miss / **0** still nested.
+- **You:** open Music.app and let it relink; reload rekordbox xml in RB7; reopen Traktor.
+- Next: BlackHole + controllers.
+
+### Library.musicdb is encrypted — symlink compat (same night)
+
+Music.app asked Locate per-track (`Less Than Burning Hawt`). `Library.musicdb` is hfma/encrypted; cannot rewrite paths. Locate also started recreating `Media.localized/Music/` (3 files pulled back).
+
+`fix_apple_music_library_paths.py --execute`:
+- Backed up musicdb → `~/Music/PioneerDJ/apple_music_library_backups/20260820_221307/`
+- Moved the 3 Locate strays back to `{Artist}/{Album}/`
+- Replaced nested `Music/` with symlink **`Media.localized/Music` → `.`**
+- Old library path now resolves: `Media.localized/Music/Pivots/These Beets/Less Than Burning Hawt.m4a`
+
+Reopen Music.app — playlists should find files without Locate. If Music has **Keep Media folder organized** on, turn it off so it doesn’t fight the symlink.
+
+David confirmed: Music playback/playlists worked; he also cleaned playlists by hand.
+
+**Rekordbox Collection relocate (same night):** XML was already healthy (22,930 live). Per-track Relocate was **Collection** (`master.db`), not XML. With RB quit, `relocate_rekordbox_collection.py --execute` updated **1,157** `FolderPath`s by basename (stems_audio). Left: **224** streaming URLs + **19** dead Downloads/Documents. Backup: `~/Music/PioneerDJ/rekordbox_library_backup_before_old_db/collection_relocate_20260820_223948/`. Reopen Rekordbox.
+
+**Parked — MRBT genre retag (later, with Ollama):** redo genre across Music + Rekordbox + Traktor. Source of truth = file tags; crates/set names (Pivots, Humidor, In My Soul, …) as the vocabulary. First pass is local LLM *inference* + a genre list, not fine-tuning on audio. Fine-tune later only if the label set needs it.
+
+**Next session:** BlackHole + controllers.
+
+---
+
 ## 2026-08-10 — Disable Cursor git co-author attribution
 
 - Turned off Commit + PR attribution for local Agent:

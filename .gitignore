@@ -13,6 +13,7 @@ Library/
 *.json
 !package.json
 organize_stems_manifest.json
+hoist_apple_music_manifest.json
 
 # Vendor / bootstrap junk
 get-pip.py

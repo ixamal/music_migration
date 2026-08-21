@@ -8,7 +8,8 @@
 - **Audio Software**: Traktor Pro 4.5.1, Rekordbox 7.2.17, Apple Music
 - **GitHub**: https://github.com/ixamal/music_migration (scripts + docs only; no audio)
 - **Journal**: `docs/PROGRESS.md` + `git log`
-- **Later**: Ollama/MCP, Verse/Unreal, Xcode; BlackHole + controllers
+- **Later**: Ollama/MCP (genre tagging from David's sets); Verse/Unreal; Xcode; BlackHole + controllers
+- **MRBT**: Music + Rekordbox + Traktor (treat as one library surface)
 
 ---
 
@@ -17,7 +18,7 @@
 - **Terrarum master**: `/Volumes/Terrarum/MIGRATION_MASTER`
   - `collection.nml`, `rekordbox.xml`, Music, PioneerDJ, `rekordbox_old_prefs/`
 - **Stems tree**: `~/Music/stems_audio` — `{Artist}/{Album}/{Track}` (~578 artists)
-- **Apple Music**: `~/Music/Music/Media` — **do not reorganize yet**
+- **Apple Music**: `~/Music/Music/Media.localized` — `{Artist}/{Album}/` after 2026-08-20 hoist
 - **Traktor NML**: `~/Documents/Native Instruments/Traktor 4.5.1/collection.nml`
 - **Rekordbox XML**: `~/Music/PioneerDJ/rekordbox.xml` (healed merge, ~23k tracks)
 - **Rekordbox live DB**: `~/Library/Pioneer/rekordbox/master.db`
@@ -54,8 +55,8 @@
 
 ---
 
-## 5. Next (another day)
-1. Sampler pads: finish manually from Capture, or dig DB/RB7 slot model further.
-2. Fold `_rescued_from_staging/`; optional Traktor wrap.
-3. Apple Music / `Media.localized` cleanup (separate project).
-4. BlackHole + S88 MkII / S8 / DDJ-FLX10.
+## 5. Next
+1. BlackHole + S88 MkII / S8 / DDJ-FLX10.
+2. Sampler pads: manual, over time (parked).
+3. Fold `_rescued_from_staging/`.
+4. Later: MRBT genre retag via local Ollama — labels from David's crates/sets, write tags to files once, then refresh Music/Rekordbox/Traktor. Not model-training-on-audio as a first pass.

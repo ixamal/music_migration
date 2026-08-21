@@ -92,7 +92,15 @@ def main() -> int:
         if path.exists():
             already_ok += 1
             continue
-        hit = index.get(path.name.lower())
+        # After Apple Music hoist: drop extra Media.localized/Music/ prefix.
+        hoisted = None
+        s = str(path)
+        needle = "/Media.localized/Music/"
+        if needle in s:
+            candidate = Path(s.replace(needle, "/Media.localized/", 1))
+            if candidate.is_file():
+                hoisted = candidate
+        hit = hoisted or index.get(path.name.lower())
         if hit is None:
             still_missing += 1
             if samples < args.sample:
