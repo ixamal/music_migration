@@ -12,8 +12,9 @@ rename tracks (basenames stay stable for Traktor/Rekordbox remaps).
 Dry-run is the default. Pass --execute to move.
 
 After a live run:
-  1. python3 update_nml_paths.py          (then fix_nml_playlists.py)
-  2. python3 heal_rekordbox_paths.py
+  1. python3 -m music_migration.traktor.update_nml_paths
+     then python3 -m music_migration.traktor.fix_nml_playlists --execute
+  2. python3 -m music_migration.rekordbox.heal_rekordbox_paths --execute
   3. Open Music.app and let it relink / Consolidate if it complains.
 
 Quit Music, Traktor, and Rekordbox before --execute.
@@ -28,6 +29,8 @@ import shutil
 import sys
 import time
 from pathlib import Path
+
+from music_migration.paths import HOIST_MANIFEST, ensure_config_dir
 
 MEDIA_ROOT = Path.home() / "Music/Music/Media.localized"
 NESTED = MEDIA_ROOT / "Music"
@@ -184,6 +187,11 @@ def main() -> int:
         help="Perform moves. Without this flag, only plan.",
     )
     parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
+    parser.add_argument(
         "--root",
         type=Path,
         default=MEDIA_ROOT,
@@ -198,8 +206,8 @@ def main() -> int:
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=Path("hoist_apple_music_manifest.json"),
-        help="Write move plan JSON here.",
+        default=HOIST_MANIFEST,
+        help="Write move plan JSON here (default: config/hoist_apple_music_manifest.json).",
     )
     args = parser.parse_args()
 
@@ -210,6 +218,9 @@ def main() -> int:
     if not media_root.is_dir():
         print(f"Error: media root not found: {media_root}", file=sys.stderr)
         return 1
+    if nested.is_symlink():
+        print(f"Nothing to hoist — {nested} is a compat symlink -> {nested.resolve()}")
+        return 0
     if not nested.is_dir():
         print(f"Nothing to hoist — nested folder missing: {nested}")
         return 0
@@ -296,6 +307,8 @@ def main() -> int:
         "empty_dirs_removed": removed_dirs,
         "moves": moves,
     }
+    ensure_config_dir()
+    args.manifest.parent.mkdir(parents=True, exist_ok=True)
     args.manifest.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     print("\n================ HOIST APPLE MUSIC ================")

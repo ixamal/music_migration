@@ -58,6 +58,11 @@ def build_index(roots: list[Path]) -> dict[str, Path]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Heal missing Rekordbox XML paths. Dry-run default.")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     parser.add_argument("--xml", type=Path, default=DEFAULT_XML)
     parser.add_argument("--sample", type=int, default=20)
     args = parser.parse_args()

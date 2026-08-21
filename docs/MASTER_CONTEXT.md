@@ -42,16 +42,22 @@
 
 ---
 
-## 4. Key scripts
-| Script | Role |
+## 4. Key scripts (`python3 -m music_migration.<pkg>.<module>`)
+
+Dry-run is the default; `--dry-run` is accepted. Pass `--execute` only to write. `hoist_apple_music` no-ops if `Media.localized/Music` is the compat symlink.
+
+| Module | Role |
 |--------|------|
-| `update_nml_paths.py` | Remap Traktor LOCATION by basename |
-| `fix_nml_playlists.py` | Repair playlist PRIMARYKEYs after remap |
-| `organize_stems.py` | Move stems_audio → Artist/Album |
-| `cleanup_staging.py` | Rescue uniques; delete staging dup trees |
-| `traktor_to_rekordbox.py` | Merge Traktor → Rekordbox XML |
-| `heal_rekordbox_paths.py` | Heal dead RB XML paths by basename |
-| `restore_rekordbox_master_db.py` | Restore Library `master.db` from Terrarum prefs |
+| `traktor.update_nml_paths` | Remap Traktor LOCATION by basename |
+| `traktor.fix_nml_playlists` | Repair playlist PRIMARYKEYs after remap |
+| `stems.organize_stems` | Move stems_audio → Artist/Album |
+| `stems.cleanup_staging` | Rescue uniques; delete staging dup trees |
+| `rekordbox.traktor_to_rekordbox` | Merge Traktor → Rekordbox XML |
+| `rekordbox.heal_rekordbox_paths` | Heal dead RB XML paths by basename |
+| `rekordbox.relocate_rekordbox_collection` | Relink Collection `master.db` FolderPaths |
+| `rekordbox.restore_rekordbox_master_db` | Restore Library `master.db` from Terrarum prefs |
+| `apple_music.hoist_apple_music` | Strip extra `Media.localized/Music/` prefix |
+| `apple_music.fix_apple_music_library_paths` | Symlink so Music.app old paths resolve |
 
 ---
 

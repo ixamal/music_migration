@@ -111,11 +111,12 @@ if __name__ == "__main__":
 
     json_output = json.dumps(data, indent=2)
 
-    output_filename = "audio_media_catalog.json"
-    with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(json_output)
+    config_dir = Path(__file__).resolve().parent.parent / "config"
+    config_dir.mkdir(parents=True, exist_ok=True)
+    output_path = config_dir / "audio_media_catalog.json"
+    output_path.write_text(json_output, encoding="utf-8")
 
     print(f"\n--- Scan Complete ---")
     print(f"Total audio files found: {data['total_files_found']}")
     print(f"Total skipped paths (errors): {data['total_errors_skipped']}")
-    print(f"Saved catalog to: {output_filename}")
+    print(f"Saved catalog to: {output_path}")

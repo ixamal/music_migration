@@ -68,6 +68,11 @@ def skip_url(fp: str) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     parser.add_argument("--sample", type=int, default=12)
     args = parser.parse_args()
     dry = not args.execute

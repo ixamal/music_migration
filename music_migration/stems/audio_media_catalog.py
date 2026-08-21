@@ -4,6 +4,8 @@ import json
 import os
 from pathlib import Path
 
+from music_migration.paths import AUDIO_MEDIA_CATALOG, ensure_config_dir
+
 # Common extensions supported by Traktor, Rekordbox, iTunes/Apple Music
 AUDIO_EXTENSIONS = {
     ".mp3",
@@ -111,11 +113,11 @@ if __name__ == "__main__":
 
     json_output = json.dumps(data, indent=2)
 
-    output_filename = "audio_media_catalog.json"
-    with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(json_output)
+    ensure_config_dir()
+    output_path = AUDIO_MEDIA_CATALOG
+    output_path.write_text(json_output, encoding="utf-8")
 
     print(f"\n--- Scan Complete ---")
     print(f"Total audio files found: {data['total_files_found']}")
     print(f"Total skipped paths (errors): {data['total_errors_skipped']}")
-    print(f"Saved catalog to: {output_filename}")
+    print(f"Saved catalog to: {output_path}")

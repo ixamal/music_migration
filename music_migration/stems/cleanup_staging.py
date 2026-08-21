@@ -46,6 +46,11 @@ def iter_staging_audio():
 def main() -> int:
     parser = argparse.ArgumentParser(description="Clean staging mirrors. Dry-run by default.")
     parser.add_argument("--execute", action="store_true", help="Perform rescue copies and deletions.")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     args = parser.parse_args()
     dry = not args.execute
     started = time.time()

@@ -6,6 +6,19 @@ This repo tracks **scripts + docs only** — not the audio library. Local SSD pa
 
 **Living log:** `docs/PROGRESS.md` + `git log` = lightweight Confluence (decisions, counts, gotchas).
 
+## Layout
+
+```
+music_migration/          Python package (run as python3 -m …)
+  traktor/                NML remap + playlist keys
+  rekordbox/              XML merge/heal + Collection master.db
+  apple_music/            Media.localized hoist + Music.app symlink
+  stems/                  stems_audio organize + staging cleanup
+config/                   JSON catalogs + move manifests (gitignored)
+archive/                  one-shot helpers from the first migration day
+docs/                     MASTER_CONTEXT + PROGRESS
+```
+
 ## What this project does
 
 1. Consolidate orphan / stem audio onto `~/Music/stems_audio`
@@ -24,39 +37,33 @@ This repo tracks **scripts + docs only** — not the audio library. Local SSD pa
 | [`docs/PROGRESS.md`](docs/PROGRESS.md) | Chronological session log |
 | `git log` | Immutable checkpoint trail |
 
-## Key scripts
+## Commands
 
-| Script | Role |
-|--------|------|
-| `update_nml_paths.py` | Index local audio → remap Traktor COLLECTION (`--dry-run`) |
-| `fix_nml_playlists.py` | Rewrite playlist PRIMARYKEYs (`--execute`) |
-| `organize_stems.py` | Metadata reorg of `stems_audio` → Artist/Album |
-| `cleanup_staging.py` | Rescue staging-only files; delete duplicate trees |
-| `traktor_to_rekordbox.py` | Merge Traktor into Terrarum RB XML → local XML |
-| `heal_rekordbox_paths.py` | Heal dead RB XML locations by basename |
-| `hoist_apple_music.py` | Strip extra `Media.localized/Music/` prefix |
-| `fix_apple_music_library_paths.py` | Symlink compat so Music.app old paths resolve |
-| `relocate_rekordbox_collection.py` | Relink Collection `master.db` FolderPaths |
-| `restore_rekordbox_master_db.py` | Restore `master.db` from Terrarum old prefs |
-| `audio_media_catalog.py` | Catalog builder |
-| `execute_local_migration.py` | Local consolidation helper |
-
-## Quick start
+From the repo root (`~/Music/MIGRATED_ORPHANS`):
 
 ```bash
-# Safe remap preview (no disk writes)
-python3 update_nml_paths.py --dry-run
+python3 -m music_migration                          # list commands
 
-# Repair playlist keys after path moves (quit Traktor first)
-python3 fix_nml_playlists.py --dry-run
-python3 fix_nml_playlists.py --execute
+# Traktor (quit Traktor before --execute writes)
+python3 -m music_migration.traktor.update_nml_paths --dry-run
+python3 -m music_migration.traktor.fix_nml_playlists --dry-run
 
-# Rekordbox XML merge (quit Rekordbox first for --execute)
-python3 traktor_to_rekordbox.py --dry-run
-python3 heal_rekordbox_paths.py --dry-run
+# Rekordbox (quit Rekordbox before Collection/XML writes)
+python3 -m music_migration.rekordbox.traktor_to_rekordbox --dry-run
+python3 -m music_migration.rekordbox.heal_rekordbox_paths --dry-run
+python3 -m music_migration.rekordbox.relocate_rekordbox_collection --dry-run
+
+# Apple Music (quit Music.app first)
+python3 -m music_migration.apple_music.hoist_apple_music --dry-run
+python3 -m music_migration.apple_music.fix_apple_music_library_paths --dry-run
+
+# stems_audio
+python3 -m music_migration.stems.organize_stems --dry-run
 ```
 
-Requires: Python 3.9+, `mutagen`, `tinytag`.
+Destructive scripts default to dry-run; pass `--execute` to write.
+
+Requires: Python 3.9+, `mutagen`, `tinytag`. Collection relocate also needs `pyrekordbox`.
 
 Rekordbox 7: Preferences → View → Layout → enable **rekordbox xml**; Advanced → Database → Imported Library → `~/Music/PioneerDJ/rekordbox.xml`.
 

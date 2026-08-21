@@ -367,6 +367,11 @@ def main() -> int:
         description="Merge Traktor NML into existing rekordbox.xml (preserve Sampler + RB crates)."
     )
     parser.add_argument("--execute", action="store_true", help="Write merged XML to disk.")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     parser.add_argument("--master", type=Path, default=MASTER_RB, help="Base rekordbox.xml")
     parser.add_argument("--nml", type=Path, default=LOCAL_NML, help="Traktor collection.nml")
     parser.add_argument("--output", type=Path, default=OUTPUT_RB, help="Output rekordbox.xml")

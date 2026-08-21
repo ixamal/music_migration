@@ -9,11 +9,10 @@ Documents/
 Downloads/
 Library/
 
-# Large generated indexes / manifests (regenerate locally)
+# Large generated indexes / manifests (local only, live in config/)
 *.json
 !package.json
-organize_stems_manifest.json
-hoist_apple_music_manifest.json
+
 
 # Vendor / bootstrap junk
 get-pip.py

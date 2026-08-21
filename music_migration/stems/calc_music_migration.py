@@ -5,6 +5,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from music_migration.paths import AUDIO_MEDIA_CATALOG, MIGRATION_CANDIDATES, ensure_config_dir
+
 
 def bytes_to_human(size_bytes):
     """Converts raw byte sizes to human-readable strings (MB / GB)."""
@@ -107,8 +109,8 @@ def analyze_migration_candidates(catalog_json_path, target_volume_path="/"):
 
 
 if __name__ == "__main__":
-    catalog_filename = "audio_media_catalog.json"
-    output_filename = "migration_candidates.json"
+    catalog_filename = AUDIO_MEDIA_CATALOG
+    output_filename = MIGRATION_CANDIDATES
 
     # Optional: Set the target drive to check (defaults to current disk or external target)
     target_volume = (
@@ -121,9 +123,9 @@ if __name__ == "__main__":
     )
 
     # Save structured JSON
+    ensure_config_dir()
     json_output = json.dumps(report_data, indent=2)
-    with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(json_output)
+    output_filename.write_text(json_output, encoding="utf-8")
 
     # Print summary report
     summary = report_data["migration_summary"]

@@ -87,6 +87,11 @@ def main() -> int:
         help="Write repaired NML (backs up to collection.nml.playlists.bak first).",
     )
     parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
+    parser.add_argument(
         "--nml",
         type=Path,
         default=DEFAULT_NML,

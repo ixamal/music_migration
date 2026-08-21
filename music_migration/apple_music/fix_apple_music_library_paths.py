@@ -44,6 +44,11 @@ def music_running() -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     args = parser.parse_args()
     dry = not args.execute
 
@@ -55,7 +60,7 @@ def main() -> int:
     if not MEDIA.is_dir():
         print(f"Error: {MEDIA} missing", file=sys.stderr)
         return 1
-    if music_running():
+    if not dry and music_running():
         print("Error: Music.app is running. Quit it (Cmd+Q) and retry.", file=sys.stderr)
         return 1
 

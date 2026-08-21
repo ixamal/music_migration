@@ -5,6 +5,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from music_migration.paths import MIGRATION_CANDIDATES
+
 # Paths to ignore (app system audio, game SFX, steam sounds, etc.)
 EXCLUDE_PATH_PREFIXES = (
     "Library/Application Support",
@@ -77,7 +79,7 @@ def run_local_migration(candidates_json_path, target_dir):
 
 
 if __name__ == "__main__":
-    json_input = "migration_candidates.json"
+    json_input = MIGRATION_CANDIDATES
 
     # Single local destination inside your home Music directory
     #local_destination = "~/Music/MIGRATED_ORPHANS"

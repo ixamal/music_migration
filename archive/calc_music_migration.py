@@ -107,8 +107,9 @@ def analyze_migration_candidates(catalog_json_path, target_volume_path="/"):
 
 
 if __name__ == "__main__":
-    catalog_filename = "audio_media_catalog.json"
-    output_filename = "migration_candidates.json"
+    config_dir = Path(__file__).resolve().parent.parent / "config"
+    catalog_filename = config_dir / "audio_media_catalog.json"
+    output_filename = config_dir / "migration_candidates.json"
 
     # Optional: Set the target drive to check (defaults to current disk or external target)
     target_volume = (
@@ -122,8 +123,8 @@ if __name__ == "__main__":
 
     # Save structured JSON
     json_output = json.dumps(report_data, indent=2)
-    with open(output_filename, "w", encoding="utf-8") as f:
-        f.write(json_output)
+    output_filename.parent.mkdir(parents=True, exist_ok=True)
+    output_filename.write_text(json_output, encoding="utf-8")
 
     # Print summary report
     summary = report_data["migration_summary"]

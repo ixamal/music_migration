@@ -31,6 +31,11 @@ XML = Path.home() / "Music/PioneerDJ/rekordbox.xml"
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
     parser.add_argument("--old-dir", type=Path, default=OLD_DIR)
     args = parser.parse_args()
     dry = not args.execute

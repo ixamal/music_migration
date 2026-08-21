@@ -15,6 +15,8 @@ import sys
 import time
 from pathlib import Path
 
+from music_migration.paths import ORGANIZE_STEMS_MANIFEST, ensure_config_dir
+
 try:
     from tinytag import TinyTag
 except ImportError:  # pragma: no cover
@@ -111,7 +113,11 @@ def plan_destination(
     # Preserve original basename so update_nml_paths.py filename lookup still works.
     dest = root / artist / album / src.name
     key = str(dest).lower()
-    if key not in used_targets and not dest.exists():
+    try:
+        same = dest.exists() and dest.resolve() == src.resolve()
+    except OSError:
+        same = False
+    if same or (key not in used_targets and not dest.exists()):
         used_targets.add(key)
         return dest
 
@@ -154,6 +160,11 @@ def main() -> int:
         help="Perform moves on disk. Without this flag, only plan (dry-run).",
     )
     parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="No writes (default). Accepted so --dry-run is a valid flag.",
+    )
+    parser.add_argument(
         "--root",
         type=Path,
         default=STEMS_ROOT,
@@ -168,8 +179,8 @@ def main() -> int:
     parser.add_argument(
         "--manifest",
         type=Path,
-        default=Path("organize_stems_manifest.json"),
-        help="Write move plan JSON here (default: ./organize_stems_manifest.json).",
+        default=ORGANIZE_STEMS_MANIFEST,
+        help="Write move plan JSON here (default: config/organize_stems_manifest.json).",
     )
     args = parser.parse_args()
 
@@ -275,6 +286,8 @@ def main() -> int:
         "empty_dirs_removed": removed_dirs,
         "moves": moves,
     }
+    ensure_config_dir()
+    args.manifest.parent.mkdir(parents=True, exist_ok=True)
     args.manifest.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     print("\n================ ORGANIZE STEMS ================")

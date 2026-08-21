@@ -77,7 +77,7 @@ def run_local_migration(candidates_json_path, target_dir):
 
 
 if __name__ == "__main__":
-    json_input = "migration_candidates.json"
+    json_input = Path(__file__).resolve().parent.parent / "config" / "migration_candidates.json"
 
     # Single local destination inside your home Music directory
     local_destination = "~/Music/MIGRATED_ORPHANS"

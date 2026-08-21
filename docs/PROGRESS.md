@@ -6,6 +6,38 @@ This file + `git log` is the project journal (Confluence without the ceremony).
 
 ---
 
+## 2026-08-20 (late) — Package dry-runs (no `--execute`)
+
+All `python3 -m music_migration.*` entry points imported and ran dry-run. `--dry-run` is now accepted everywhere (default is still no writes). Manifests land in `config/`.
+
+| Command | Result |
+|---------|--------|
+| `traktor.update_nml_paths` | Would relink 22,132; 2,812 unmatched. No NML write. |
+| `traktor.fix_nml_playlists` | 2,396 keys live; 0 repairs; 144 unresolved (loops/recordings). |
+| `rekordbox.heal_rekordbox_paths` | 22,930 OK; 0 heal; 74 still missing (SoundCloud leftovers). |
+| `rekordbox.relocate_rekordbox_collection` | 1,543 live; 0 writes; 224 streaming + 19 dead. RB was running (read-only). |
+| `rekordbox.traktor_to_rekordbox` | Terrarum master missing. Against local XML: 22,259 Location updates (case like Latour/LaTour); **do not execute** unless we want that rewrite. |
+| `rekordbox.restore_rekordbox_master_db` | Terrarum `rekordbox_db_old` not mounted — expected. |
+| `apple_music.hoist_apple_music` | First dry-run followed `Music` → `.` and planned 23,334 self-dupes. Guard added: symlink → no-op. |
+| `apple_music.fix_apple_music_library_paths` | Compat symlink already in place. |
+| `stems.organize_stems` | After self-path fix: 3,835 already OK; 46 leftover moves (tag/folder case). Do not `--execute`. |
+| `stems.cleanup_staging` | Staging trees gone; 1 Google Drive shortcut junk listed. |
+
+Do not `--execute` hoist or organize — library is already laid out.
+
+---
+
+## 2026-08-20 (late) — Package layout before BlackHole
+
+Scripts grouped under `music_migration/` with `__init__.py`:
+
+- `traktor/` `rekordbox/` `apple_music/` `stems/`
+- Run: `python3 -m music_migration` or `python3 -m music_migration.traktor.update_nml_paths --dry-run`
+- Old one-shots → `archive/` (was `archive_py_json/`)
+- JSON catalogs/manifests → `config/` (`music_migration/paths.py`)
+
+---
+
 ## 2026-08-20 — Apple Music hoist EXECUTED; Traktor + Rekordbox remapped
 
 - Sampler pads: David will rebuild by hand over time. Parked.
